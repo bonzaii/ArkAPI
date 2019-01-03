@@ -28,6 +28,14 @@ public class RCON {
     private final Random rand = new Random();
 
 
+    /**
+     * RCON class to manage a single connection with RCON server. This is specifically made for
+     * ARK: Survival Evolved
+     *
+     * @param address
+     * @param port
+     * @param password
+     */
     public RCON(String address, int port, String password) {
         this.address = address;
         this.port = port;
@@ -35,6 +43,12 @@ public class RCON {
 
     }
 
+    /**
+     * Establish the connection with RCON taking into account all data required for the connection
+     * is already set
+     *
+     * @throws Exception
+     */
     public void connect() throws Exception {
 
         if (address == null || address.trim().isEmpty()) {
@@ -52,34 +66,73 @@ public class RCON {
             this.socket = new Socket(address, port);
         }
 
-        RCONPacket res =  authorize(password);
+        Packet res =  authorize(password);
 
         if (res.getRequestId() == -1) {
+            disconnect();
             throw new AuthenticationException("Password rejected by server");
         }
     }
 
-    protected RCONPacket send(int type, String message) throws Exception {
-        return RCONPacket.send(this, type, message.getBytes(charset));
+    /**
+     * Internal method to generate & send packet.
+     *
+     * @param type
+     * @param message
+     * @return
+     * @throws Exception
+     */
+    protected Packet send(int type, String message) throws Exception {
+        return Packet.send(this, type, message.getBytes(charset));
     }
 
+    /**
+     * TODO
+     *
+     * This should be managed by a thread as asynchronous reads are required for CrossARK Chats
+     * and in-game chat commands like /reward
+     *
+     * @return
+     */
     private boolean receive() {
 
         return false;
     }
 
 
-
-    private RCONPacket authorize(String password) throws Exception {
-        return send(RCONPacket.DATATYPE_AUTH, password);
+    /**
+     * Send authorisation (password) to the RCON server.
+     *
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    private Packet authorize(String password) throws Exception {
+        return send(Packet.DATATYPE_AUTH, password);
     }
 
-    public RCONPacket sendCommand(String command) throws Exception {
-        return send(RCONPacket.DATATYPE_COMMAND, command);
+    /**
+     * Send normal command to the RCON server
+     *
+     * @param command
+     * @return
+     * @throws Exception
+     */
+    public Packet sendCommand(String command) throws Exception {
+        return send(Packet.DATATYPE_COMMAND, command);
     }
 
 
-
+    /**
+     * Close the socket on disconnection
+     *
+     * @throws IOException
+     */
+    public void disconnect() throws IOException {
+        synchronized (sync) {
+            this.socket.close();
+        }
+    }
 
     public String getAddress() { return address; }
     public int getPort() { return port; }

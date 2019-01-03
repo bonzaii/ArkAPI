@@ -8,7 +8,7 @@ import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class RCONPacket {
+public class Packet {
 
     public static final int DATATYPE_COMMAND = 2;
     public static final int DATATYPE_AUTH = 3;
@@ -18,7 +18,7 @@ public class RCONPacket {
     private byte[] payload;
 
 
-    private RCONPacket(int requestId, int type, byte[] payload) {
+    private Packet(int requestId, int type, byte[] payload) {
         this.requestId = requestId;
         this.type = type;
         this.payload = payload;
@@ -32,10 +32,10 @@ public class RCONPacket {
     public byte[] getPayload() { return payload; }
 
 
-    protected static RCONPacket send(RCON connection, int type, byte[] payload) throws IOException {
+    protected static Packet send(RCON connection, int type, byte[] payload) throws IOException {
 
         try {
-            RCONPacket.write(connection.getSocket().getOutputStream(), connection.getRequestId(), type, payload);
+            Packet.write(connection.getSocket().getOutputStream(), connection.getRequestId(), type, payload);
         }
         catch (SocketException se) {
             // Close the socket in error
@@ -44,15 +44,15 @@ public class RCONPacket {
             throw se;
         }
 
-        return RCONPacket.read(connection.getSocket().getInputStream());
+        return Packet.read(connection.getSocket().getInputStream());
     }
 
 
 
 
     private static void write(OutputStream out, int requestId, int type, byte[] payload) throws IOException {
-        int bodyLength = RCONPacket.getBodyLength(payload.length);
-        int packetLength = RCONPacket.getPacketLength(bodyLength);
+        int bodyLength = Packet.getBodyLength(payload.length);
+        int packetLength = Packet.getPacketLength(bodyLength);
 
         ByteBuffer buffer = ByteBuffer.allocate(packetLength);
         buffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -71,7 +71,7 @@ public class RCONPacket {
         out.flush();
     }
 
-    private static RCONPacket read(InputStream in) throws IOException {
+    private static Packet read(InputStream in) throws IOException {
         // Header is 3 4-bytes ints
         byte[] header = new byte[4 * 3];
 
@@ -98,7 +98,7 @@ public class RCONPacket {
             // Read the null bytes
             dis.read(new byte[2]);
 
-            return new RCONPacket(requestId, type, payload);
+            return new Packet(requestId, type, payload);
         }
         catch(BufferUnderflowException | EOFException e) {
             throw new MalformedPacketException("Cannot read the whole packet");
