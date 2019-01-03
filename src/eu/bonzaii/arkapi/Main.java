@@ -12,7 +12,7 @@ public class Main {
 	    int port = 27020;
 	    String password = "topsecret";
 
-
+        //test
 	    RCON rcon = new RCON(host, port, password);
 
 	    rcon.connect();
