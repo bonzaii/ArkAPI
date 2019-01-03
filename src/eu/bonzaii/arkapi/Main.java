@@ -1,7 +1,7 @@
 package eu.bonzaii.arkapi;
 
 
-import eu.bonzaii.arkapi.eu.bonzaii.arkapi.rcon.RCON;
+import eu.bonzaii.arkapi.rcon.RCON;
 
 public class Main {
 

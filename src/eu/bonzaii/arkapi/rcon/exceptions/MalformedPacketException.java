@@ -1,4 +1,4 @@
-package eu.bonzaii.arkapi.eu.bonzaii.arkapi.rcon.exceptions;
+package eu.bonzaii.arkapi.rcon.exceptions;
 
 import java.io.IOException;
 

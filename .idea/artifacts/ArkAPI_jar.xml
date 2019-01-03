@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ArkAPI:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ArkAPI_jar</output-path>
+    <root id="archive" name="ArkAPI.jar">
+      <element id="module-output" name="ArkAPI" />
+    </root>
+  </artifact>
+</component>

@@ -1,6 +1,6 @@
-package eu.bonzaii.arkapi.eu.bonzaii.arkapi.rcon;
+package eu.bonzaii.arkapi.rcon;
 
-import eu.bonzaii.arkapi.eu.bonzaii.arkapi.rcon.exceptions.MalformedPacketException;
+import eu.bonzaii.arkapi.rcon.exceptions.MalformedPacketException;
 
 import java.io.*;
 import java.net.SocketException;
