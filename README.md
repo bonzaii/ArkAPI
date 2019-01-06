@@ -10,7 +10,7 @@ Any tips & help is greatly appreciated.
 
 # Prerequisites
 
-- standard libraries
+- [org.yaml.snakeyaml.Yaml](https://bitbucket.org/asomov/snakeyaml)
 
 # Roadmap
 
