@@ -19,7 +19,8 @@ Top Priority
 - [x] Start! LOL
 - [x] Establish the way to store basic configuration, like server list etc
 - [x] establish connection with the server and issue a test command
-- [ ] create persistent connection to a server
+- [ ] implement config
+- [ ] create persistent connection to a server - 2 threads per server - read & write
 - [ ] create multiple persistent connections
 
 Other priority
