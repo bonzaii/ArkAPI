@@ -4,6 +4,8 @@ package eu.bonzaii.arkapi;
 import eu.bonzaii.arkapi.rcon.RCON;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
+
 
 public class Main {
 
@@ -13,8 +15,20 @@ public class Main {
         Yaml yaml = new Yaml();
 
 
+		File configFile = new File("config.yaml");
+		if (configFile.exists() && !configFile.isDirectory()) {
+			/**
+			 * TODO
+			 * 1. create a template for config.yaml
+			 * 2. save config.yaml from template
+			 * 3. throw an error message
+			 * 4. perhaps change it to try/catch for parsing config.yaml in first place?
+			 */
 
-	    if (0 == 1) {
+		}
+
+
+	    /*
 
 			String host = "s2.bonzaii.eu";
 			int port = 27020;
@@ -26,6 +40,6 @@ public class Main {
 			rcon.connect();
 			rcon.sendCommand("broadcast Test broadcast");
 
-		}
+		*/
     }
 }
